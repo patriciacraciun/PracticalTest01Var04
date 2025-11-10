@@ -88,6 +88,16 @@
                 android:enabled="false"
                 android:saveEnabled="false"
                 android:text="PerfectStudent341C1" />
+
+            <Button
+                android:id="@+id/sec"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:layout_column="2"
+                android:text="secondary activity"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="parent"/>
         </LinearLayout>
 
     </LinearLayout>

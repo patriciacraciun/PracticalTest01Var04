@@ -1,12 +1,19 @@
 package ro.pub.cs.systems.eim.practicaltest01var04
 
+import android.widget.CheckBox
+import android.app.Activity
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.widget.Button
-import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import org.w3c.dom.Text
 
 class PracticalTest01Var04MainActivity : AppCompatActivity() {
 
@@ -23,13 +30,22 @@ class PracticalTest01Var04MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_practical_test01_var04_main)
-
         input1 = findViewById(R.id.input1)
         input2 = findViewById(R.id.input2)
         label = findViewById(R.id.label)
         check1 = findViewById(R.id.check1)
         check2 = findViewById(R.id.check2)
 
+        val activityResultsLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val message = result.data?.getStringExtra("result")
+                if (message != null) {
+                    Toast.makeText(this, "Result: $message", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
 
         check1.setOnCheckedChangeListener { buttonView, isChecked ->
             if (!check1_on) {
@@ -61,6 +77,14 @@ class PracticalTest01Var04MainActivity : AppCompatActivity() {
                 label.text = "PerfectStudent341C1"
             }
         }
+
+        findViewById<Button>(R.id.sec).setOnClickListener() {
+            val intent = Intent(this, PracticalTest01Var04SecondaryActivity::class.java)
+            intent.putExtra("input1", input1.text.toString())
+            intent.putExtra("input2", input2.text.toString())
+            activityResultsLauncher.launch(intent)
+        }
+
     }
 
 //    override fun onSaveInstanceState(outState: Bundle) {
